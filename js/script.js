@@ -47,7 +47,7 @@ $(document).ready(function() {
 	});
 
 	$.fn.fullpage.setMouseWheelScrolling(false);
-    $.fn.fullpage.setAllowScrolling(false);
+    $.fn.fullpage.setAllowScrolling(true);
 
 	$("#demosMenu").change(function(){
       window.location.href = $(this).find("option:selected").attr("id") + '.html';

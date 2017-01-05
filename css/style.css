@@ -58,12 +58,11 @@ abbr,acronym { border: 0;
 }
 #menu li {
   display:inline-block;
-  margin: 10px;
+  margin: 0px;
   color: #000;
   background:#fff;
   background: rgba(255,255,255, 0.5);
-  -webkit-border-radius: 10px;
-            border-radius: 10px;
+
 }
 #menu li.active{
   background:#666;
@@ -97,7 +96,7 @@ abbr,acronym { border: 0;
   width: 100%;
   padding: 0;
   margin:0;
-  text-align: center;
+  text-align: right;
 }
 
 
@@ -266,6 +265,6 @@ div.vis_wrap_right {
       left: 130%;
       position:relative;
   }
-    #section3 p{
+#section3 p{
       display:none;
-    }
+}
