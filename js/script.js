@@ -98,8 +98,27 @@ $(document).ready(function() {
 
         var chart_m,
             chart_r,
-            color = d3.scale.category20();
-
+            color = function(i){
+            	switch(i) {
+            		case 0:
+            			return "#d73027";
+            			break;
+            		case 1:
+            			return "#fc8d59"
+            		case 2:
+            			return "#fee08b"
+            		case 3:
+            			return "#ffffbf"
+            		case 4:
+            			return "#d9ef8b"
+            		case 5:
+            			return "#91cf60"
+            		case 6:
+            			return "#1a9850"
+            		default:
+            			return "black";
+            	}
+            }
         var getCatNames = function(dataset) {
             var catNames = new Array();
 
@@ -109,30 +128,6 @@ $(document).ready(function() {
 
             return catNames;
         }
-
-        // var createLegend = function(catNames) {
-        //     var legends = charts.select('.legend')
-        //                     .selectAll('g')
-        //                         .data(catNames)
-        //                     .enter().append('g')
-        //                         .attr('transform', function(d, i) {
-        //                             return 'translate(' + (i * 150 + 50) + ', 10)';
-        //                         });
-    
-        //     legends.append('circle')
-        //         .attr('class', 'legend-icon')
-        //         .attr('r', 6)
-        //         .style('fill', function(d, i) {
-        //             return color(i);
-        //         });
-    
-        //     legends.append('text')
-        //         .attr('dx', '1em')
-        //         .attr('dy', '.3em')
-        //         .text(function(d) {
-        //             return d;
-        //         });
-        // }
 
         var createCenter = function(pie) {
 
@@ -150,13 +145,6 @@ $(document).ready(function() {
                         .ease('bounce')
                         .attr("r", chart_r * 0.6);
                 },
-
-                // 'click': function(d, i) {
-                //     var paths = charts.selectAll('.clicked');
-                //     pathAnim(paths, 0);
-                //     paths.classed('clicked', false);
-                //     resetAllCenterText();
-                // }
             }
 
             var donuts = d3.selectAll('.donut');
@@ -171,7 +159,7 @@ $(document).ready(function() {
                     .attr('class', 'center-txt type')
                     .attr('y', chart_r * -0.16)
                     .attr('text-anchor', 'middle')
-                    .style('font-weight', 'bold')
+                    .style('font-weight', 900)
                     .text(function(d, i) {
                         return d.type;
                     });
@@ -236,41 +224,66 @@ $(document).ready(function() {
         var updateDonut = function() {
 
             var eventObj = {
-
+            	// on mouseover we wanna make bigger both pie parts, so its 
+            	// easier to compare
                 'mouseover': function(d, i, j) {
-                    pathAnim(d3.select(this), 1);
-                    var thisDonut = charts.select('.type' + j);
-                    thisDonut.select('.value').text(function(donut_d) {
-                        return d.data.val.toFixed(1) + '%';
-                    });
-                    thisDonut.select('.percentage').text(function(donut_d) {
-                    	return d.data.cat;
-                    });
+
+	                var thisPath = d3.select(this);
+                    var correctCat = thisPath[0][0]["__data__"].data.cat;
+
+                    var thisDonut = charts.select('.type0');
+                    thisDonut.selectAll('path')
+                    	.each(function(d, i){
+                    		if (correctCat === d.data.cat) {
+                    			pathAnim(d3.select(this), 1);
+			                    thisDonut.select('.value').text(function(donut_d) {
+			                        return d.data.val.toFixed(1) + '%';
+			                    });
+			                    thisDonut.select('.percentage').text(function(donut_d) {
+			                    	return d.data.cat;
+			                    });
+                    		}
+                    	});
+
+                    var thatDonut = charts.select('.type1');
+                    thatDonut.selectAll('path')
+                    	.each(function(e, i){
+
+                    		if (correctCat === e.data.cat) {
+                    			pathAnim(d3.select(this), 1);
+    		                    thatDonut.select('.value').text(function(donut_d) {
+			                        return e.data.val.toFixed(1) + '%';
+			                    });
+
+			                    thatDonut.select('.percentage').text(function(donut_d) {
+			                    	return e.data.cat;
+			                    });
+                    		}
+                    	});
+
                 },
                 
                 'mouseout': function(d, i, j) {
                     var thisPath = d3.select(this);
-                    if (!thisPath.classed('clicked')) {
-                        pathAnim(thisPath, 0);
-                    }
-                    var thisDonut = charts.select('.type' + j);
+                    var correctCat = thisPath[0][0]["__data__"].data.cat;
+                    var thisDonut = charts.select('.type0');
+                    thisDonut.selectAll('path')
+                    	.each(function(d, i){
+                    		if (correctCat === d.data.cat) {
+                    			pathAnim(d3.select(this), 0);
+                    		}
+                    	});                   
                     setCenterText(thisDonut);
+
+                    var thatDonut = charts.select('.type1');
+                    thatDonut.selectAll('path')
+                    	.each(function(d, i){
+                    		if (correctCat === d.data.cat) {
+                    			pathAnim(d3.select(this), 0);
+                    		}
+                    	});
+                    setCenterText(thatDonut);
                 },
-
-                // 'click': function(d, i, j) {
-                //     var thisDonut = charts.select('.type' + j);
-
-                //     if (0 === thisDonut.selectAll('.clicked')[0].length) {
-                //         thisDonut.select('circle').on('click')();
-                //     }
-
-                //     var thisPath = d3.select(this);
-                //     var clicked = thisPath.classed('clicked');
-                //     pathAnim(thisPath, ~~(!clicked));
-                //     thisPath.classed('clicked', !clicked);
-
-                //     setCenterText(thisDonut);
-                // }
             };
 
             var pie = d3.layout.pie()
@@ -314,8 +327,8 @@ $(document).ready(function() {
 
         this.create = function(dataset) {
             var $charts = $('#donut-charts');
-            chart_m = $charts.innerWidth() / dataset.length / 2 * 0.14;
-            chart_r = $charts.innerWidth() / dataset.length / 2 * 0.85;
+            chart_m = $charts.innerWidth() / dataset.length / 2 * 0.08;
+            chart_r = $charts.innerWidth() / dataset.length / 2 * 0.70;
 
             charts.append('svg')
                 .attr('class', 'legend')
@@ -334,7 +347,6 @@ $(document).ready(function() {
                             })
                             .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
 
-            // createLegend(getCatNames(dataset));
             createCenter();
 
             updateDonut();
