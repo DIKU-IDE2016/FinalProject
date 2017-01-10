@@ -101,10 +101,14 @@ abbr,acronym { border: 0;
 
 
 #section0{
-  background-image: url(../img/bg.jpg);
+  background-image: url(../img/bg5.jpg);
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center; 
+}
+
+#header{
+  margin-bottom: 100px;
 }
 
 /* Demos Menu
@@ -265,6 +269,17 @@ div.vis_wrap_right {
       left: 130%;
       position:relative;
   }
-#section3 p{
-      display:none;
+
+.closing {
+  font-size: 1.5em;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.fp-scrollable {
+    overflow: hidden;
+    position: relative;
+}
+.fp-scroller{
+    overflow: hidden;
 }

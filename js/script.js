@@ -9,6 +9,7 @@ $(document).ready(function() {
 		sectionsColor: 	['whitesmoke', 	'whitesmoke', 			'#1bbc9b', 			'white'],
 		anchors: 		['intro', 		'visualization1',	'visualization2', 	'aboutus'],
 		menu: '#menu',
+
 		onLeave: function(index, nextIndex, direction){
 			firsttime = false;
 			if(nextIndex != 1)
@@ -46,7 +47,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$.fn.fullpage.setMouseWheelScrolling(false);
+	$.fn.fullpage.setMouseWheelScrolling(true);
     $.fn.fullpage.setAllowScrolling(true);
 
 	$("#demosMenu").change(function(){
@@ -160,6 +161,7 @@ $(document).ready(function() {
                     .attr('y', chart_r * -0.16)
                     .attr('text-anchor', 'middle')
                     .style('font-weight', 900)
+                    .style('font-size', 'x-large')
                     .text(function(d, i) {
                         return d.type;
                     });
