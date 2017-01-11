@@ -370,4 +370,16 @@ div.tooltip {
     border-radius: 8px;     
     pointer-events: none;     
 }
+.clickedbody {
+  stroke-width: 5px;
+}
 /*BODY POINTS END*/
+.axis path {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: Lato;
+    font-size: 13px;
+}

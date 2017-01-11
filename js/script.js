@@ -356,117 +356,264 @@ $(document).ready(function() {
 // =============================================================================
 // === D3.js part Man's body ===================================================
 // =============================================================================
-
-    function drawBody(csv, isMale) {
-    // Define the div for the tooltip
-    var div = d3.select("body").append("div")   
-        .attr("class", "tooltip")               
-        .style("opacity", 0);
-
-    var body = d3.select("#human");
-    body.selectAll('g ellipse')
-        .attr("class", "bodypoints")
-        .on('mouseover', function(d, i){ // ADD TOOLTIPS HERE
-                div.transition()        
-                    .duration(200)      
-                    .style("opacity", 1);      
-
-                div.html(d3.select(this).attr("label"))  
-                    .style("left", (d3.event.pageX) + "px")     
-                    .style("top", (d3.event.pageY - 28) + "px"); 
-                // d3.select(this)
-                //     .classed("hovered", true);
-            })
-            .on('mouseout', function(d){
-                div.transition()        
-                    .duration(500)      
-                    .style("opacity", 0); 
-                // d3.select(this)
-                //     .classed("hovered", false);
-            })
-            .on('click', function(){
-                var isClicked = !d3.select(this).classed("clicked");
-                d3.select(this)
-                    .classed("clicked",isClicked);
-                    clicked[this.id] = isClicked;
-            });
-
-    // datapoints differ from male and female
-    // Males do not have breast or uterus cancers, so we remove 
-    // those body points
-    if(isMale) {
-
-    var clicked = {
-        "colorectum": false,
-        "leukemia": false,
-        "liver": false,
-        "lung": false,
-        "ovaryAndProstate": false
-    }
-    body.selectAll('#breast')
-        .attr("visibility", "hidden");
-    body.selectAll('#uterus')
-        .attr("visibility" , "hidden");
-    body.selectAll('#ovary')
-        .attr("visibility" , "hidden");     
-    } else {
-
-    var clicked = {
-        "breast": false,
-        "uterus": false,
-        "colorectum": false,
-        "leukemia": false,
-        "liver": false,
-        "lung": false,
-        "ovaryAndProstate": false
-    }       
-    body.selectAll('#breast')
-        .attr("visibility", "visible");
-    body.selectAll('#uterus')
-        .attr("visibility" , "visible");     
-    body.selectAll('#uterus')
-        .attr("visibility" , "visible");  
-    body.selectAll('#prostate')
-        .attr("visibility" , "hidden");    
-    }
-
-    // body.selectAll('#breast')
-    //     .on('mouseover', function(d, i){
-
-    //         })
-    //         .on('mouseout', function(d){
-
-    //         })
-    //         .on('click', function(){
-
-    //         });
-
-    // body.selectAll('#colorectum')
-
-
-    // body.selectAll('#leukemia')
-
-    // body.selectAll('#liver')
-
-    // body.selectAll('#lung')
-
-    // body.selectAll('#ovaryAndProstate')
-
-    // body.selectAll('#uterus')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
-    }
-
+   
     // on load we call drawBody with Female Incidence rates
     drawBody("data/female_incidence.csv", false);
+    d3.select("#human").selectAll('g g g path')
+        .classed("clickedbody",true);
+    function drawBody(csv, isMale) {
+        d3.csv(csv, function(error,dataset) {
+            
+            if (error){
+                console.log(error);
+            } else {
+                var combined = [],
+                    colorectum = [],
+                    leukemia = [],
+                    liver = [],
+                    lung = [],
+                    prostate = [],
+                    breast = [],
+                    ovary = [],
+                    uterus = [];
 
+                for (var i = 0; i < dataset.length; i++) {
+
+                    year = parseInt(dataset[i]["Year"]);
+
+                    combined.push({"year":year, "value": parseFloat(dataset[i]["Combined"])});
+                    colorectum.push({"year":year, "value": parseFloat(dataset[i]["Colorectum"])});
+                    leukemia.push({"year":year, "value": parseFloat(dataset[i]["Leukemia"])});
+                    liver.push({"year":year, "value": parseFloat(dataset[i]["Liver and intrahepatic bile duct"])});
+                    lung.push({"year":year, "value": parseFloat(dataset[i]["Lung and bronchus"])});
+                    breast.push({"year":year, "value": parseFloat(dataset[i]["Breast"])});
+                    ovary.push({"year":year, "value": parseFloat(dataset[i]["Ovary"])});
+                    uterus.push({"year":year, "value": parseFloat(dataset[i]["Uterus"])});
+                    prostate.push({"year":year, "value": parseFloat(dataset[i]["Prostate"])});
+
+                };
+
+                // Define the div for the tooltip
+                var div = d3.select("body").append("div")   
+                    .attr("class", "tooltip")               
+                    .style("opacity", 0);
+
+                var body = d3.select("#human");
+
+                body.selectAll('g g g path')
+                    .on('click', function(){
+                        var label = d3.select(this).attr("label");
+                        var isClicked = !d3.select(this).classed("clickedbody");
+                        d3.select(this)
+                            .classed("clickedbody",isClicked);
+                        if(isClicked){
+                            for(var attr in clicked){
+                                clicked[attr] = false;
+                            }
+                            clicked["Combined"] = true;
+                        } else{
+                            for(var attr in clicked){
+                                clicked[attr] = false;
+                            }
+                        }
+                            body.selectAll('g ellipse').
+                            each(function(){
+                                d3.select(this).classed("clicked",false);
+                            })
+                        redrawLines(clicked);
+                    });
+
+                body.selectAll('g ellipse')
+                    .attr("class", "bodypoints")
+                    .on('mouseover', function(d, i){ // ADD TOOLTIPS HERE
+                            div.transition()        
+                                .duration(200)      
+                                .style("opacity", 1);      
+
+                            div.html(d3.select(this).attr("label"))  
+                                .style("left", (d3.event.pageX) + "px")     
+                                .style("top", (d3.event.pageY - 28) + "px"); 
+                            // d3.select(this)
+                            //     .classed("hovered", true);
+                        })
+                        .on('mouseout', function(d){
+                            div.transition()        
+                                .duration(500)      
+                                .style("opacity", 0); 
+                            // d3.select(this)
+                            //     .classed("hovered", false);
+                        })
+                        .on('click', function(){
+                            if(clicked["Combined"]) {
+                                body.selectAll('g g g path')
+                                    .classed("clickedbody",false);
+                                clicked["Combined"] = false;
+                            }
+                            var label = d3.select(this).attr("label");
+                            var isClicked = !d3.select(this).classed("clicked");
+                            d3.select(this)
+                                .classed("clicked",isClicked);
+                                clicked[label] = isClicked;
+                                // console.log(clicked)
+                            redrawLines(clicked);
+                        });
+
+                    // datapoints differ from male and female
+                    // Males do not have breast or uterus cancers, so we remove 
+                    // those body points
+                    if(isMale) {
+
+                        var clicked = {
+                            "Combined": true,
+                            "Colorectum": false,
+                            "Leukemia": false,
+                            "Liver and intrahepatic bile duct": false,
+                            "Lung and bronchus": false,
+                            "Prostate": false
+                        }
+                        body.selectAll('#breast')
+                            .attr("visibility", "hidden");
+                        body.selectAll('#uterus')
+                            .attr("visibility" , "hidden");
+                        body.selectAll('#ovary')
+                            .attr("visibility" , "hidden");  
+                        body.selectAll('#prostate')
+                            .attr("visibility" , "visible");   
+                    } else {
+
+                        var clicked = {
+                            "Combined": true,
+                            "Breast": false,
+                            "Colorectum": false,
+                            "Leukemia": false,
+                            "Liver and intrahepatic bile duct": false,
+                            "Lung and bronchus": false,
+                            "Ovary": false,
+                            "Uterus": false
+                        }      
+                        body.selectAll('#breast')
+                            .attr("visibility", "visible");
+                        body.selectAll('#uterus')
+                            .attr("visibility" , "visible");     
+                        body.selectAll('#uterus')
+                            .attr("visibility" , "visible");  
+                        body.selectAll('#prostate')
+                            .attr("visibility" , "hidden");    
+                    }
+// =============================================================================
+// === D3.js part Man's body ===================================================
+// =============================================================================
+
+                    var vis = d3.select("#visulaizationLines"),
+                    WIDTH = 800,
+                    HEIGHT = 500,
+                    MARGINS = {
+                        top: 20,
+                        right: 20,
+                        bottom: 20,
+                        left: 50
+                    },
+                    // here we define the ranges and domains of x and y scales
+                    xScale = d3.scale.linear()
+                                .range([MARGINS.left, WIDTH - MARGINS.right])
+                                .domain([1975, 2013]);
+
+                    yScale = d3.scale.linear()
+                                .range([HEIGHT - MARGINS.top, MARGINS.bottom])
+                                .domain([
+                                    Math.min.apply(null, combined.map(function(a){return a.value;})),
+                                    Math.max.apply(null, combined.map(function(a){return a.value;}))
+                                ]);
+
+                    xAxis = d3.svg.axis()
+                        .scale(xScale),
+                      
+                    yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left");
+
+                    // Append both axis
+                    vis.append("svg:g")
+                        .attr("class","axis")
+                        .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+                        .call(xAxis);
+
+                    vis.append("svg:g")
+                        .attr("class","axis")
+                        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+                        .call(yAxis);
+
+                    // Append axis labels
+                    vis.append("text")
+                        .attr("class", "x label")
+                        .attr("text-anchor", "end")
+                        .attr("x", WIDTH-20)
+                        .attr("y", HEIGHT-25)
+                        .text("Year");
+
+                    vis.append("text")
+                        .attr("class", "y label")
+                        .attr("text-anchor", "end")
+                        .attr("y", 65)
+                        .attr("x", -20)
+                        .attr("transform", "rotate(-90)")
+                        .text("Value");
+
+                    // generate the actual line
+                    var lineGen = d3.svg.line()
+                      .x(function(d) {
+                        return xScale(d.year);
+                      })
+                      .y(function(d) {
+                        return yScale(d.value);
+                      });
+
+                    redrawLines(clicked);
+                    function redrawLines(clicked){
+                        console.log("Redrawing Lines");
+                        for(var attr in clicked){
+                            if (clicked[attr]){
+                                switch(attr){
+                                    case "Combined":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(combined))
+                                          .attr('stroke', 'green')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
+                                    case "Breast":
+                                        console.log("Breast")
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(breast))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;                              
+                                }
+                            } else {
+                                //remove line i guess?
+                            }
+                        }
+                    }
+
+                        }
+                });
+}
+
+    // redrawLines("data/female_incidence.csv", {
+    //         "Combined": true,
+    //         "Breast": false,
+    //         "Colorectum": false,
+    //         "Leukemia": false,
+    //         "Liver and intrahepatic bile duct": false,
+    //         "Lung and bronchus": false,
+    //         "Ovary": false,
+    //         "Uterus": false
+    //     });
+
+    // function redrawLines(csv, clicked) {
+        
+    // }
     // We watch the checkbox for changes and re-draw the whole view
     $('input:checkbox').change(
         function(){
