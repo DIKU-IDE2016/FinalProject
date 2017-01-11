@@ -358,101 +358,99 @@ $(document).ready(function() {
 // =============================================================================
 
     function drawBody(csv, isMale) {
-    
+    // Define the div for the tooltip
+    var div = d3.select("body").append("div")   
+        .attr("class", "tooltip")               
+        .style("opacity", 0);
+
     var body = d3.select("#human");
     body.selectAll('g ellipse')
         .attr("class", "bodypoints")
-        .on('mouseover', function(d, i){
+        .on('mouseover', function(d, i){ // ADD TOOLTIPS HERE
+                div.transition()        
+                    .duration(200)      
+                    .style("opacity", 1);      
 
-                d3.select(this)
-                    .attr("class", "bodypoints hovered");
+                div.html(d3.select(this).attr("label"))  
+                    .style("left", (d3.event.pageX) + "px")     
+                    .style("top", (d3.event.pageY - 28) + "px"); 
+                // d3.select(this)
+                //     .classed("hovered", true);
             })
             .on('mouseout', function(d){
+                div.transition()        
+                    .duration(500)      
+                    .style("opacity", 0); 
+                // d3.select(this)
+                //     .classed("hovered", false);
+            })
+            .on('click', function(){
+                var isClicked = !d3.select(this).classed("clicked");
                 d3.select(this)
-                    .attr("class", "bodypoints");
+                    .classed("clicked",isClicked);
+                    clicked[this.id] = isClicked;
             });
 
     // datapoints differ from male and female
     // Males do not have breast or uterus cancers, so we remove 
     // those body points
-
     if(isMale) {
+
+    var clicked = {
+        "colorectum": false,
+        "leukemia": false,
+        "liver": false,
+        "lung": false,
+        "ovaryAndProstate": false
+    }
     body.selectAll('#breast')
         .attr("visibility", "hidden");
     body.selectAll('#uterus')
-        .attr("visibility" , "hidden");   
+        .attr("visibility" , "hidden");
+    body.selectAll('#ovary')
+        .attr("visibility" , "hidden");     
     } else {
+
+    var clicked = {
+        "breast": false,
+        "uterus": false,
+        "colorectum": false,
+        "leukemia": false,
+        "liver": false,
+        "lung": false,
+        "ovaryAndProstate": false
+    }       
     body.selectAll('#breast')
         .attr("visibility", "visible");
     body.selectAll('#uterus')
-        .attr("visibility" , "visible");       
+        .attr("visibility" , "visible");     
+    body.selectAll('#uterus')
+        .attr("visibility" , "visible");  
+    body.selectAll('#prostate')
+        .attr("visibility" , "hidden");    
     }
 
     // body.selectAll('#breast')
     //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
+
     //         })
     //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
+
+    //         })
+    //         .on('click', function(){
+
     //         });
 
     // body.selectAll('#colorectum')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
+
 
     // body.selectAll('#leukemia')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
 
     // body.selectAll('#liver')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
 
     // body.selectAll('#lung')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
 
     // body.selectAll('#ovaryAndProstate')
-    //     .on('mouseover', function(d, i){
-    //             console.log(this);
-    //             d3.select(this)
-    //                 .style("opacity", 0.5);
-    //         })
-    //         .on('mouseout', function(d){
-    //             d3.select(this)
-    //                 .style("opacity", 1);
-    //         });
 
     // body.selectAll('#uterus')
     //     .on('mouseover', function(d, i){

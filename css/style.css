@@ -347,10 +347,27 @@ input.cmn-toggle-yes-no:checked + label:after {
 
 /*BODY POINTS */
 .bodypoints {
-
+      fill: #fee0d2;
+      stroke: #de2d26;
+      stroke-width: 1px;
 }
+
 .bodypoints.hovered {
   opacity: 0.5;
 }
-
+.bodypoints.clicked {
+  opacity: 0.5;
+}
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+  /*  width: 60px;          
+    height: 28px;*/         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: #99d8c9; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
 /*BODY POINTS END*/
