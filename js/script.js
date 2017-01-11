@@ -596,24 +596,10 @@ $(document).ready(function() {
                         }
                     }
 
-                        }
-                });
-}
+            }
+        });
+    }
 
-    // redrawLines("data/female_incidence.csv", {
-    //         "Combined": true,
-    //         "Breast": false,
-    //         "Colorectum": false,
-    //         "Leukemia": false,
-    //         "Liver and intrahepatic bile duct": false,
-    //         "Lung and bronchus": false,
-    //         "Ovary": false,
-    //         "Uterus": false
-    //     });
-
-    // function redrawLines(csv, clicked) {
-        
-    // }
     // We watch the checkbox for changes and re-draw the whole view
     $('input:checkbox').change(
         function(){
@@ -635,4 +621,3 @@ $(document).ready(function() {
             }
         });
 });
-
