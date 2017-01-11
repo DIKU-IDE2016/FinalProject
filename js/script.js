@@ -357,12 +357,104 @@ $(document).ready(function() {
 // === D3.js part Man's body ===================================================
 // =============================================================================
 
-    function drawBody(csv) {
+    function drawBody(csv, isMale) {
+    
     var body = d3.select("#human");
+    body.selectAll('g ellipse')
+        .attr("class", "bodypoints")
+        .on('mouseover', function(d, i){
 
-    console.log(body);
+                d3.select(this)
+                    .attr("class", "bodypoints hovered");
+            })
+            .on('mouseout', function(d){
+                d3.select(this)
+                    .attr("class", "bodypoints");
+            });
 
-    // body.selectAll('#svg_4')
+    // datapoints differ from male and female
+    // Males do not have breast or uterus cancers, so we remove 
+    // those body points
+
+    if(isMale) {
+    body.selectAll('#breast')
+        .attr("visibility", "hidden");
+    body.selectAll('#uterus')
+        .attr("visibility" , "hidden");   
+    } else {
+    body.selectAll('#breast')
+        .attr("visibility", "visible");
+    body.selectAll('#uterus')
+        .attr("visibility" , "visible");       
+    }
+
+    // body.selectAll('#breast')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#colorectum')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#leukemia')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#liver')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#lung')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#ovaryAndProstate')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+
+    // body.selectAll('#uterus')
     //     .on('mouseover', function(d, i){
     //             console.log(this);
     //             d3.select(this)
@@ -375,7 +467,7 @@ $(document).ready(function() {
     }
 
     // on load we call drawBody with Female Incidence rates
-    drawBody("data/female_incidence.csv");
+    drawBody("data/female_incidence.csv", false);
 
     // We watch the checkbox for changes and re-draw the whole view
     $('input:checkbox').change(
@@ -385,16 +477,16 @@ $(document).ready(function() {
 
             if (male && death) {
                 console.log("Male Death");
-                drawBody("data/male_death.csv");
+                drawBody("data/male_death.csv", true);
             } else if (male && !death) {
                 console.log("Male Incidence");
-                drawBody("data/male_incidence.csv");
+                drawBody("data/male_incidence.csv", true);
             } else if (!male && death) {
                 console.log("Female Death");
-                drawBody("data/female_death.csv");
+                drawBody("data/female_death.csv", false);
             } else if(!male && !death){
                 console.log("Female Incidence");
-                drawBody("data/female_incidence.csv");
+                drawBody("data/female_incidence.csv", false);
             }
         });
 });

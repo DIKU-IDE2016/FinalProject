@@ -344,3 +344,13 @@ input.cmn-toggle-yes-no:checked + label:after {
   transform: rotateY(0);
 }
 /*SWITCHES END*/
+
+/*BODY POINTS */
+.bodypoints {
+
+}
+.bodypoints.hovered {
+  opacity: 0.5;
+}
+
+/*BODY POINTS END*/
