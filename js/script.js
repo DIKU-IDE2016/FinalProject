@@ -380,7 +380,7 @@ $(document).ready(function() {
                 for (var i = 0; i < dataset.length; i++) {
 
                     year = parseInt(dataset[i]["Year"]);
-
+                    console.log(dataset[i]);
                     combined.push({"year":year, "value": parseFloat(dataset[i]["Combined"])});
                     colorectum.push({"year":year, "value": parseFloat(dataset[i]["Colorectum"])});
                     leukemia.push({"year":year, "value": parseFloat(dataset[i]["Leukemia"])});
@@ -393,6 +393,7 @@ $(document).ready(function() {
 
                 };
 
+                console.log(prostate);
                 // Define the div for the tooltip
                 var div = d3.select("body").append("div")   
                     .attr("class", "tooltip")               
@@ -495,7 +496,7 @@ $(document).ready(function() {
                             .attr("visibility", "visible");
                         body.selectAll('#uterus')
                             .attr("visibility" , "visible");     
-                        body.selectAll('#uterus')
+                        body.selectAll('#ovary')
                             .attr("visibility" , "visible");  
                         body.selectAll('#prostate')
                             .attr("visibility" , "hidden");    
@@ -521,7 +522,7 @@ $(document).ready(function() {
                     yScale = d3.scale.linear()
                                 .range([HEIGHT - MARGINS.top, MARGINS.bottom])
                                 .domain([
-                                    Math.min.apply(null, combined.map(function(a){return a.value;})),
+                                    0,
                                     Math.max.apply(null, combined.map(function(a){return a.value;}))
                                 ]);
 
@@ -570,7 +571,7 @@ $(document).ready(function() {
 
                     redrawLines(clicked);
                     function redrawLines(clicked){
-                        console.log("Redrawing Lines");
+                        // console.log("Redrawing Lines");
                         for(var attr in clicked){
                             if (clicked[attr]){
                                 switch(attr){
@@ -582,13 +583,61 @@ $(document).ready(function() {
                                           .attr('fill', 'none');
                                         break;
                                     case "Breast":
-                                        console.log("Breast")
                                         vis.append('svg:path')
                                           .attr('d', lineGen(breast))
                                           .attr('stroke', 'red')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         break;                              
+                                    case "Colorectum":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(colorectum))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break; 
+                                    case "Leukemia":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(leukemia))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break; 
+                                    case "Liver and intrahepatic bile duct":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(liver))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
+                                    case "Lung and bronchus":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(lung))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
+                                    case "Prostate":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(prostate))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
+                                    case "Ovary":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(ovary))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
+                                    case "Uterus":
+                                        vis.append('svg:path')
+                                          .attr('d', lineGen(uterus))
+                                          .attr('stroke', 'red')
+                                          .attr('stroke-width', 2)
+                                          .attr('fill', 'none');
+                                        break;
                                 }
                             } else {
                                 //remove line i guess?
@@ -599,6 +648,8 @@ $(document).ready(function() {
             }
         });
     }
+
+// http://bl.ocks.org/WilliamQLiu/59c87d2bcc00800ec3f9 we should DO THIS
 
     // We watch the checkbox for changes and re-draw the whole view
     $('input:checkbox').change(
