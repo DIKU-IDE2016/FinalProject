@@ -58,7 +58,6 @@ $(document).ready(function() {
     	$.fn.fullpage.moveSectionDown();
     });
 
-
 // =============================================================================
 // === D3.js Pie chart =========================================================
 // =============================================================================
@@ -92,7 +91,6 @@ $(document).ready(function() {
 	    var donuts = new DonutCharts();
 	    donuts.create(donutData);
 	});
-
     function DonutCharts() {
 
         var charts = d3.select('#donut-charts');
@@ -359,20 +357,45 @@ $(document).ready(function() {
 // === D3.js part Man's body ===================================================
 // =============================================================================
 
-	var manBody = d3.select("#manbody");
+    function drawBody(csv) {
+    var body = d3.select("#human");
 
-	manBody.selectAll('#svg_4')
-		.on('mouseover', function(d, i){
-				console.log(this);
-				d3.select(this)
-					.style("opacity", 0.5);
-	        })
-	        .on('mouseout', function(d){
-	        	d3.select(this)
-					.style("opacity", 1);
-	        });
+    console.log(body);
 
+    // body.selectAll('#svg_4')
+    //     .on('mouseover', function(d, i){
+    //             console.log(this);
+    //             d3.select(this)
+    //                 .style("opacity", 0.5);
+    //         })
+    //         .on('mouseout', function(d){
+    //             d3.select(this)
+    //                 .style("opacity", 1);
+    //         });
+    }
 
+    // on load we call drawBody with Female Incidence rates
+    drawBody("data/female_incidence.csv");
+
+    // We watch the checkbox for changes and re-draw the whole view
+    $('input:checkbox').change(
+        function(){
+            var male = document.getElementById("cmn-toggle-1").checked;
+            var death = document.getElementById("cmn-toggle-2").checked;
+
+            if (male && death) {
+                console.log("Male Death");
+                drawBody("data/male_death.csv");
+            } else if (male && !death) {
+                console.log("Male Incidence");
+                drawBody("data/male_incidence.csv");
+            } else if (!male && death) {
+                console.log("Female Death");
+                drawBody("data/female_death.csv");
+            } else if(!male && !death){
+                console.log("Female Incidence");
+                drawBody("data/female_incidence.csv");
+            }
+        });
 });
-
 
