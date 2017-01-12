@@ -360,10 +360,11 @@ $(document).ready(function() {
     // on load we call drawBody with Female Incidence rates
     drawBody("data/female_incidence.csv", false);
     function drawBody(csv, isMale) {
-
+        // clean canvas of everything
+        d3.selectAll("#visulaizationLines g").remove();
         d3.select("#human").selectAll('g g g path')
             .classed("clickedbody",true);
-            
+
         d3.csv(csv, function(error,dataset) {
             
             if (error){
@@ -394,7 +395,6 @@ $(document).ready(function() {
 
                 };
 
-                console.log(prostate);
                 // Define the div for the tooltip
                 var div = d3.select("body").append("div")   
                     .attr("class", "tooltip")               
@@ -540,11 +540,15 @@ $(document).ready(function() {
                         .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
                         .call(xAxis);
 
-                    vis.append("svg:g")
+                    var yAxisGroup = vis.append("svg:g")
                         .attr("class","axis")
-                        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-                        .call(yAxis);
+                        .attr("transform", "translate(" + (MARGINS.left) + ",0)");
+                        // .call(yAxis);
 
+                        yAxisGroup
+                        .transition()
+                        .duration(1000)
+                        .call(yAxis);  // Update Y-Axis
                     // Append axis labels
                     vis.append("text")
                         .attr("class", "x label")
@@ -572,9 +576,52 @@ $(document).ready(function() {
 
                     redrawLines(clicked);
                     function redrawLines(clicked){
-                        var duration = 1000
+                        var duration = 1000;
+                        // REMOVING ALL PLOT LINES (this should be expanded to remove only those who are not clicked)
                         vis.selectAll(".plotline").remove();
 
+                        // RESCALING AXIS
+                        var concatenatedArray = [];
+                        for(var attr in clicked){
+                            if (clicked[attr]){
+                                switch(attr){
+                                    case "Combined":
+                                        concatenatedArray = concatenatedArray.concat(combined);
+                                        break;
+                                    case "Breast":
+                                        concatenatedArray = concatenatedArray.concat(breast);
+                                        break;                              
+                                    case "Colorectum":
+                                        concatenatedArray = concatenatedArray.concat(colorectum);
+                                        break; 
+                                    case "Leukemia":
+                                        concatenatedArray = concatenatedArray.concat(leukemia);
+                                        break; 
+                                    case "Liver and intrahepatic bile duct":
+                                        concatenatedArray = concatenatedArray.concat(liver);
+                                        break;
+                                    case "Lung and bronchus":
+                                        concatenatedArray = concatenatedArray.concat(lung);
+                                        break;
+                                    case "Prostate":
+                                        concatenatedArray = concatenatedArray.concat(prostate);
+                                        break;
+                                    case "Ovary":
+                                        concatenatedArray = concatenatedArray.concat(ovary);
+                                        break;
+                                    case "Uterus":
+                                        concatenatedArray = concatenatedArray.concat(uterus);
+                                        break;
+                                }
+                            }
+                        }
+                        yScale.domain([0, Math.max.apply(null, concatenatedArray.map(function(a){return a.value;}))])
+                        yAxisGroup
+                        .transition()
+                        .duration(duration)
+                        .call(yAxis);  // Update Y-Axis
+
+                        // APPENDING LINES
                         for(var attr in clicked){
                             if (clicked[attr]){
                                 switch(attr){
@@ -632,7 +679,7 @@ $(document).ready(function() {
                                     case "Leukemia":
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
-                                          .attr('d', lineGen(colorectum))
+                                          .attr('d', lineGen(leukemia))
                                           .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
@@ -642,7 +689,7 @@ $(document).ready(function() {
                                           .attr("stroke-dasharray", totalLength + " " + totalLength)
                                           .attr("stroke-dashoffset", totalLength)
                                           .transition()
-                                          .duration(leukemia)
+                                          .duration(duration)
                                           .ease("linear")
                                           .attr("stroke-dashoffset", 0);
                                         break; 
