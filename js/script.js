@@ -6,7 +6,7 @@ var firsttime = true;
 $(document).ready(function() {
 	$("#menu").hide();
 	$('#fullpage').fullpage({
-		sectionsColor: 	['whitesmoke', 	'whitesmoke', 			'#1bbc9b', 			'white'],
+		sectionsColor: 	['whitesmoke', 	'whitesmoke', 			'whitesmoke', 			'whitesmoke'],
 		anchors: 		['intro', 		'visualization1',	'visualization2', 	'aboutus'],
 		menu: '#menu',
 
@@ -543,12 +543,12 @@ $(document).ready(function() {
                     var yAxisGroup = vis.append("svg:g")
                         .attr("class","axis")
                         .attr("transform", "translate(" + (MARGINS.left) + ",0)");
-                        // .call(yAxis);
 
                         yAxisGroup
                         .transition()
                         .duration(1000)
                         .call(yAxis);  // Update Y-Axis
+                        
                     // Append axis labels
                     vis.append("text")
                         .attr("class", "x label")
