@@ -359,9 +359,11 @@ $(document).ready(function() {
    
     // on load we call drawBody with Female Incidence rates
     drawBody("data/female_incidence.csv", false);
-    d3.select("#human").selectAll('g g g path')
-        .classed("clickedbody",true);
     function drawBody(csv, isMale) {
+
+        d3.select("#human").selectAll('g g g path')
+            .classed("clickedbody",true);
+            
         d3.csv(csv, function(error,dataset) {
             
             if (error){
@@ -380,7 +382,6 @@ $(document).ready(function() {
                 for (var i = 0; i < dataset.length; i++) {
 
                     year = parseInt(dataset[i]["Year"]);
-                    console.log(dataset[i]);
                     combined.push({"year":year, "value": parseFloat(dataset[i]["Combined"])});
                     colorectum.push({"year":year, "value": parseFloat(dataset[i]["Colorectum"])});
                     leukemia.push({"year":year, "value": parseFloat(dataset[i]["Leukemia"])});
@@ -502,7 +503,7 @@ $(document).ready(function() {
                             .attr("visibility" , "hidden");    
                     }
 // =============================================================================
-// === D3.js part Man's body ===================================================
+// === D3.js part Line plots ===================================================
 // =============================================================================
 
                     var vis = d3.select("#visulaizationLines"),
@@ -571,76 +572,166 @@ $(document).ready(function() {
 
                     redrawLines(clicked);
                     function redrawLines(clicked){
-                        // console.log("Redrawing Lines");
+                        var duration = 1000
+                        vis.selectAll(".plotline").remove();
+
                         for(var attr in clicked){
                             if (clicked[attr]){
                                 switch(attr){
                                     case "Combined":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(combined))
                                           .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                     case "Breast":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(breast))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;                              
                                     case "Colorectum":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(colorectum))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break; 
                                     case "Leukemia":
-                                        vis.append('svg:path')
-                                          .attr('d', lineGen(leukemia))
-                                          .attr('stroke', 'red')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
+                                          .attr('d', lineGen(colorectum))
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(leukemia)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break; 
                                     case "Liver and intrahepatic bile duct":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(liver))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                     case "Lung and bronchus":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(lung))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                     case "Prostate":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(prostate))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                     case "Ovary":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(ovary))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                     case "Uterus":
-                                        vis.append('svg:path')
+                                        var path = vis.append('svg:path')
+                                          .classed('plotline', true)
                                           .attr('d', lineGen(uterus))
-                                          .attr('stroke', 'red')
+                                          .attr('stroke', 'green')
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
+                                        var totalLength = path.node().getTotalLength();
+
+                                        path
+                                          .attr("stroke-dasharray", totalLength + " " + totalLength)
+                                          .attr("stroke-dashoffset", totalLength)
+                                          .transition()
+                                          .duration(duration)
+                                          .ease("linear")
+                                          .attr("stroke-dashoffset", 0);
                                         break;
                                 }
-                            } else {
-                                //remove line i guess?
                             }
                         }
                     }
@@ -660,6 +751,7 @@ $(document).ready(function() {
             if (male && death) {
                 console.log("Male Death");
                 drawBody("data/male_death.csv", true);
+
             } else if (male && !death) {
                 console.log("Male Incidence");
                 drawBody("data/male_incidence.csv", true);
