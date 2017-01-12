@@ -528,7 +528,8 @@ $(document).ready(function() {
                                 ]);
 
                     xAxis = d3.svg.axis()
-                        .scale(xScale),
+                        .scale(xScale)
+                        .tickFormat(d3.format("d")),
                       
                     yAxis = d3.svg.axis()
                         .scale(yScale)
@@ -548,7 +549,7 @@ $(document).ready(function() {
                         .transition()
                         .duration(1000)
                         .call(yAxis);  // Update Y-Axis
-                        
+
                     // Append axis labels
                     vis.append("text")
                         .attr("class", "x label")
