@@ -383,3 +383,52 @@ div.tooltip {
     font-family: Lato;
     font-size: 13px;
 }
+.toolTip {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: absolute;
+        display: none;
+        width: auto;
+        height: auto;
+        background: none repeat scroll 0 0 white;
+        border: 0 none;
+        border-radius: 8px 8px 8px 8px;
+        box-shadow: -3px 3px 15px #888888;
+        color: black;
+        font: 12px sans-serif;
+        padding: 5px;
+        text-align: center;
+    }
+
+.bar {
+    fill: rgb(249, 218, 126);
+    fill-opacity: .9;
+}
+
+.tbar{
+  fill:#F5F5F5;
+}
+
+.box,.box_death{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  position: relative;
+  margin: 40px;
+  background-color: rgb(34, 165, 151);
+  border: 0 none;
+  border-radius: 8px 8px 8px 8px;
+  box-shadow: -3px 3px 15px #888888;
+  padding: 0px;
+}
+
+.box text, .box_death text{
+  fill:white;
+  font-weight: 100;
+}
+.tlabel{
+  display: block;
+  stroke:rgb(112,128,144);
+  fill:rgb(112,128,144);
+  font-weight: 300;
+  opacity: 1;
+  -webkit-font-smoothing:antialiased;
+}

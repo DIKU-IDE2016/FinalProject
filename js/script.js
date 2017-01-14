@@ -6,8 +6,8 @@ var firsttime = true;
 $(document).ready(function() {
 	$("#menu").hide();
 	$('#fullpage').fullpage({
-		sectionsColor: 	['whitesmoke', 	'whitesmoke', 			'whitesmoke', 			'whitesmoke'],
-		anchors: 		['intro', 		'visualization1',	'visualization2', 	'aboutus'],
+		sectionsColor: 	['whitesmoke', 	'whitesmoke', 'whitesmoke', 			'whitesmoke', 			'whitesmoke'],
+		anchors: 		['intro', 'Estimatesfor2017','visualization1',	'visualization2', 	'aboutus'],
 		menu: '#menu',
 
 		onLeave: function(index, nextIndex, direction){
@@ -32,17 +32,23 @@ $(document).ready(function() {
 				
 			}
 			else if(index == 2){
-				$('#sc_ind2').fadeIn().queue(function(next) {
+				$('#sc_indnew').fadeIn().queue(function(next) {
 						$(this).addClass("bouncing");
 						next();
 				});
 			}
 			else if(index == 3){
-				$('#sc_ind3').fadeIn().queue(function(next) {
+				$('#sc_ind1').fadeIn().queue(function(next) {
 						$(this).addClass("bouncing");
 						next();
 				});				
 			}
+            else if(index == 4){
+                $('#sc_ind2').fadeIn().queue(function(next) {
+                        $(this).addClass("bouncing");
+                        next();
+                });             
+            }
 			
 		}
 	});
@@ -811,4 +817,240 @@ $(document).ready(function() {
                 drawBody("data/female_incidence.csv", false);
             }
         });
+});
+
+// --- For section 2017-----------------------
+// Declare common variables for both visualizations
+var div = d3.select("section2017").append("div").attr("class", "toolTip");
+
+var margins = {top: 40, right: 40, bottom: 70, left: 100};
+
+var width = 600 - margins.left - margins.right,
+    barHeight = 25;
+
+var left_width = 10;
+var gap = 20, yRangeBand;
+
+// redefine y for adjusting the gap
+var yRangeBand = barHeight + 2 * gap;
+
+
+d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
+    if (error){
+      console.log(error);
+    } else {
+
+    
+    var height = barHeight * data.length;
+
+    
+    var y = function(i) { return yRangeBand * i; };
+
+    svg = d3.select('section2017')
+            .append("svg")
+            .attr("class","box")
+            .attr('width', left_width + width + 40)
+            .attr('height', (barHeight + gap * 2) * data.length + 30)
+            .append("g")
+            .attr("transform", "translate(10, 20)");
+            
+
+    var max_n = 0;
+    for (var d in data) {
+        max_n = Math.max(data[d].combined, max_n);
+    }
+
+
+    var dx = width / max_n;
+    var dy = height / data.length;
+
+
+    // bars
+
+    // transparent bars for each data 
+    var tbar = svg.selectAll(".tbar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class","tbar")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
+        .attr("width", function(d, i) {return dx*max_n})
+        .attr("height", barHeight);
+    
+    //Main bar
+    var bar = svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class","bar")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
+        .attr("width", function(d, i) {return dx*(d.combined*0.65)})
+        .attr("height", barHeight);
+
+    // labels
+    var text2 = svg.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2-5;})
+        .text( function(d) {return d.Type;})
+        .attr("text-anchor", "start")
+        .attr("class", "textup");
+
+    // Add title
+    var text1 = svg.append("text")
+        .attr("x", width/3)
+        .attr("y", 0)
+        .text("Estimated new cases, 2017")
+        .attr("text-anchor", "start")
+        .attr("class", "texttitle");
+    var formatComma = d3.format(",");
+    // Put text on tbar
+    var text3 = svg.selectAll("textlabel")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d, i) {
+                return left_width+dx*(d.combined*0.65)+60;   
+        })
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2+17;})
+        .text( function(d) {return formatComma(d.combined); })
+        .attr("text-anchor", "end")
+        .attr("class","tlabel");
+    
+    bar
+            .on("mousemove", function(d){
+                div.style("left", d3.event.pageX+10+"px");
+                div.style("top", d3.event.pageY-25+"px");
+                div.style("display", "inline-block");
+                div.html((d.Type)+" "+(d.combined));
+            });
+    bar
+            .on("mouseout", function(d){
+                div.style("display", "none");
+            });
+    tbar
+            .on("mousemove", function(d){
+                div.style("left", d3.event.pageX+10+"px");
+                div.style("top", d3.event.pageY-25+"px");
+                div.style("display", "inline-block");
+                div.html((d.Type)+" "+(d.combined));
+            });
+    tbar
+            .on("mouseout", function(d){
+                div.style("display", "none");
+            });
+}
+});
+d3.csv("data/DeathEstimates2017.csv", function(error,data) {
+    if (error){
+      console.log(error);
+    } else {
+
+    var height = barHeight * data.length;
+
+    var y = function(i) { return yRangeBand * i; };
+
+    svg = d3.select('section2017')
+            .append("svg")
+            .attr("class","box_death")
+            .attr('width', left_width + width + 40)
+            .attr('height', (barHeight + gap * 2) * data.length + 30)
+            .append("g")
+            .attr("transform", "translate(10, 20)");
+            
+            
+    var max_n = 0;
+    for (var d in data) {
+        max_n = Math.max(data[d].combined, max_n);
+    }
+
+
+    var dx = width / max_n;
+    var dy = height / data.length;
+
+
+    // bars
+
+    // transparent bars for each data 
+    var tbar = svg.selectAll(".tbar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class","tbar")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
+        .attr("width", function(d, i) {return dx*max_n})
+        .attr("height", barHeight);
+    
+    //Main bar
+    var bar = svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class","bar")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
+        .attr("width", function(d, i) {return dx*(d.combined*0.65)})
+        .attr("height", barHeight);
+
+    // labels
+    var text2 = svg.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2-5;})
+        .text( function(d) {return d.Type;})
+        .attr("text-anchor", "start")
+        .attr("class", "textup");
+
+    // Add title
+    var text1t = svg.append("text")
+        .attr("x", width/3)
+        .attr("y", 0)
+        .text("Estimated death cases, 2017")
+        .attr("text-anchor", "start")
+        .attr("class", "texttitle");
+
+    var formatComma = d3.format(",");
+    // Put text on tbar
+    var text3 = svg.selectAll("textlabel")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d, i) {
+                return left_width+dx*(d.combined*0.65)+60;   
+        })
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2+17;})
+        .text( function(d) {return formatComma(d.combined); })
+        .attr("text-anchor", "end")
+        .attr("class","tlabel");
+    
+    bar
+            .on("mousemove", function(d){
+                div.style("left", d3.event.pageX+10+"px");
+                div.style("top", d3.event.pageY-25+"px");
+                div.style("display", "inline-block");
+                div.html((d.Type)+" "+(d.combined));
+            });
+    bar
+            .on("mouseout", function(d){
+                div.style("display", "none");
+            });
+    tbar
+            .on("mousemove", function(d){
+                div.style("left", d3.event.pageX+10+"px");
+                div.style("top", d3.event.pageY-25+"px");
+                div.style("display", "inline-block");
+                div.html((d.Type)+" "+(d.combined));
+            });
+    tbar
+            .on("mouseout", function(d){
+                div.style("display", "none");
+            });
+}
 });
