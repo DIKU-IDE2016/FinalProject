@@ -821,7 +821,7 @@ $(document).ready(function() {
 
 // --- For section 2017-----------------------
 // Declare common variables for both visualizations
-var div = d3.select("#section2017").append("div").attr("class", "toolTip");
+var div = d3.select("body").append("div").attr("class", "toolTip");
 
 var margins = {top: 40, right: 40, bottom: 70, left: 100};
 
