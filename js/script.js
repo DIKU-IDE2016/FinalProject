@@ -821,7 +821,7 @@ $(document).ready(function() {
 
 // --- For section 2017-----------------------
 // Declare common variables for both visualizations
-var div = d3.select("section2017").append("div").attr("class", "toolTip");
+var div = d3.select("#section2017").append("div").attr("class", "toolTip");
 
 var margins = {top: 40, right: 40, bottom: 70, left: 100};
 
@@ -840,13 +840,12 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
       console.log(error);
     } else {
 
-    
     var height = barHeight * data.length;
 
     
     var y = function(i) { return yRangeBand * i; };
 
-    svg = d3.select('section2017')
+    svg = d3.select('#section2017')
             .append("svg")
             .attr("class","box")
             .attr('width', left_width + width + 40)
@@ -954,7 +953,7 @@ d3.csv("data/DeathEstimates2017.csv", function(error,data) {
 
     var y = function(i) { return yRangeBand * i; };
 
-    svg = d3.select('section2017')
+    svg = d3.select('#section2017')
             .append("svg")
             .attr("class","box_death")
             .attr('width', left_width + width + 40)
