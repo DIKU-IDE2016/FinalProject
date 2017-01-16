@@ -14,33 +14,30 @@
 </head>
 <body>
 	<ul id="menu">
-		<li data-menuanchor="intro"><a href="#intro">Introduction</a></li>
-		<li data-menuanchor="Estimatesfor2017"><a href="Estimatesfor2017">Estimates for 2017</a></li>
+		<li data-menuanchor="intro"><a href="#intro">Introduction</a></li>		
 		<li data-menuanchor="visualization1"><a href="#visualization1">Pie</a></li>
 		<li data-menuanchor="visualization2"><a href="#visualization2">Man</a></li>
+		<li data-menuanchor="Estimatesfor2017"><a href="#Estimatesfor2017">Estimates for 2017</a></li>
 		<li data-menuanchor="aboutus"><a href="#aboutus">About Us</a></li>
 	</ul>
 
 	<div id="fullpage">
 
 		<div class="section container-fluid" id="section0">
-			<div>
-				<div id="header">
+			<div id="header">
 				<h1>Cancer in the US</h1>
-				</div>
+			</div>
+			<div>
 				<div class="text-editor-wrap" style="opacity: 0">
 					<div class="text-body">
 						<div id="being_typed_intro" class="inner-text">
 							<p>
-							In the United states, the number of deaths by cancer have been on the rise over the past few years.
-							</p>
-							<p>
-								What are the trends in the development of cancers over the past few years in the United States ?
+							In the United states, the number of deaths by cancer have been constantly on a rise for past decades. Ever been curious how these numbers and trends are changing over these years?
 							</p>
 							<br/>
 							<p>
 								On this webpage, you will see a sequence of visualizations that will show you the trends in the development of the various cancers affecting men and women over the years. 
-								All the data used are derived from <a href="https://seer.cancer.gov"> SEER program</a>
+								All the data used are derived from <a style="font-weight: bold" href="https://seer.cancer.gov">SEER program</a>.
 							</p>
 							<br/>
 							<p>
@@ -53,17 +50,9 @@
 			<div class="scroll-indicator" id="sc_ind"><div class="fa fa-chevron-down"></div></div>
 		</div>
 
-		<div class="section container-fluid" id="sectionnew">
-			
-			<h2>Estimates cases and deaths from Cancer in 2017 </h2>
-			<div id="section2017"></div>
-			<div class="scroll-indicator" id="sc_indnew">
-				<div class="fa fa-chevron-down"></div>
-			</div>
-		</div>
 		<div class="section container-fluid" id="section1">
 			<section>
-				<h1>Leading Causes of Death in US, 1975 vs 2013 </h1>
+				<h2>Leading Causes of Death in US, 1975 vs 2013 </h2>
 				<!-- <div id="donut-charts"></div> -->
 				<div class="row">
 			    <div class="col-md-8" id="donut-charts">
@@ -122,6 +111,19 @@
 			</section>
 			<div class="scroll-indicator" id="sc_ind2"><div class="fa fa-chevron-down"></div></div>
 		</div>
+
+		<div class="section container-fluid" id="sectionnew">
+			<div class="slide active" id="slide1">
+            	<div id="section2017_vis1"></div>
+        	</div>
+	        <div class="slide" id="slide2">
+	            <div id="section2017_vis2"></div>
+	        </div>
+			<div class="scroll-indicator" id="sc_indnew">
+				<div class="fa fa-chevron-down"></div>
+			</div>
+		</div>
+
 		<div class="section" id="section3">
 		    <div class="intro">
 				<h1>Eduards Klavins</h1>

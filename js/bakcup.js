@@ -6,8 +6,8 @@ var firsttime = true;
 $(document).ready(function() {
 	$("#menu").hide();
 	$('#fullpage').fullpage({
-		sectionsColor: 	['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', '#FF847C'],
-		anchors: 		['intro', 'visualization1',	'visualization2', 'Estimatesfor2017', 	'aboutus'],
+		sectionsColor: 	['whitesmoke', 	'whitesmoke', 'whitesmoke', 			'whitesmoke', 			'whitesmoke'],
+		anchors: 		['intro', 'Estimatesfor2017','visualization1',	'visualization2', 	'aboutus'],
 		menu: '#menu',
 
 		onLeave: function(index, nextIndex, direction){
@@ -825,15 +825,14 @@ var div = d3.select("body").append("div").attr("class", "toolTip");
 
 var margins = {top: 40, right: 40, bottom: 70, left: 100};
 
-var width = 800 - margins.left - margins.right,
+var width = 1200 - margins.left - margins.right,
     barHeight = 25;
 
-var left_width = 250;
-var left_width_label = 10;
+var left_width = 10;
 var gap = 20, yRangeBand;
 
 // redefine y for adjusting the gap
-var yRangeBand = (barHeight + 2 * gap) /2;
+var yRangeBand = barHeight + 2 * gap;
 
 
 d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
@@ -844,13 +843,18 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
     var height = barHeight * data.length;
 
     
-    var y = function(i) { return yRangeBand * i + 40; };
+    var y = function(i) { 
+        if(i%2 == 0) 
+            return (yRangeBand/2) * i; 
+        else
+            return (yRangeBand/2) * (i-1); 
+    };
 
     svg = d3.select('#section2017_vis1')
             .append("svg")
             .attr("class","box")
-            .attr('width', left_width + width + 40)
-            .attr('height', ((barHeight + gap * 2) * data.length + 30)/2 + 80)
+            .attr('width', left_width + width + 40 + 30)
+            .attr('height', ((barHeight + gap * 2) * data.length + 30)/2 + 50)
             .append("g")
             .attr("transform", "translate(10, 20)");
             
@@ -861,11 +865,10 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
     }
 
 
-    var dx = width / max_n;
+    var dx = (width/2) / max_n;
     var dy = height / data.length;
 
-
-    // bars
+    extra = 570;
 
     // transparent bars for each data 
     var tbar = svg.selectAll(".tbar")
@@ -873,18 +876,29 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
         .enter()
         .append("rect")
         .attr("class","tbar")
-        .attr("x", left_width)
+        .attr("x", function(d, i) { 
+            if(i%2 == 0) 
+                return left_width;
+            else
+                return left_width+extra;
+        })
         .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
         .attr("width", function(d, i) {return dx*max_n})
         .attr("height", barHeight);
-    
+
     //Main bar
     var bar = svg.selectAll(".bar")
         .data(data)
         .enter()
         .append("rect")
         .attr("class","bar")
-        .attr("x", left_width)
+        //.attr("x", left_width)
+        .attr("x", function(d, i) { 
+            if(i%2 == 0) 
+                return left_width;
+            else
+                return left_width+extra;
+        })
         .attr("y", function(d, i) { return y(i) + yRangeBand/2;})
         .attr("width", function(d, i) {return dx*(d.combined*0.65)})
         .attr("height", barHeight);
@@ -894,19 +908,22 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
         .data(data)
         .enter()
         .append("text")
-        .attr("x", left_width_label)
-        .attr("y", function(d, i) { return y(i) + yRangeBand + 2;})
+        //.attr("x", left_width)
+        .attr("x", function(d, i) { 
+            if(i%2 == 0) 
+                return left_width;
+            else
+                return left_width+extra;
+        })
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2-5;})
         .text( function(d) {return d.Type;})
         .attr("text-anchor", "start")
         .attr("class", "textup");
 
     // Add title
     var text1 = svg.append("text")
-        .attr("x", width/1.9)
-        .attr("y", 20)
-        .style("font-size", "1.5em")
-        .style("font-family", "'Oswald', sans-serif")
-        .text("Estimated New Cases for 2017")
+        .attr("x", width/3)
+        .attr("y", 0)
         .attr("text-anchor", "start")
         .attr("class", "texttitle");
     var formatComma = d3.format(",");
@@ -916,7 +933,10 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
         .enter()
         .append("text")
         .attr("x", function(d, i) {
-                return left_width+dx*(d.combined*0.65)+60;   
+            if(i%2 == 0)
+                return (left_width+(dx*d.combined*0.65)+60);
+            else
+                return (left_width+(dx*d.combined*0.65)+60) + extra;
         })
         .attr("y", function(d, i) { return y(i) + yRangeBand/2+17;})
         .text( function(d) {return formatComma(d.combined); })
@@ -954,13 +974,13 @@ d3.csv("data/DeathEstimates2017.csv", function(error,data) {
 
     var height = barHeight * data.length;
 
-    var y = function(i) { return yRangeBand * i + 40; };
+    var y = function(i) { return yRangeBand * i /2 + 20; };
 
     svg = d3.select('#section2017_vis2')
             .append("svg")
             .attr("class","box_death")
             .attr('width', left_width + width + 40)
-            .attr('height', ((barHeight + gap * 2) * data.length) /2 + 100)
+            .attr('height', (barHeight + gap * 2) * data.length + 30)
             .append("g")
             .attr("transform", "translate(10, 20)");
             
@@ -1004,19 +1024,16 @@ d3.csv("data/DeathEstimates2017.csv", function(error,data) {
         .data(data)
         .enter()
         .append("text")
-        .attr("x", left_width_label)
-        .attr("y", function(d, i) { return y(i) + yRangeBand + 2;})
+        .attr("x", left_width)
+        .attr("y", function(d, i) { return y(i) + yRangeBand/2-5;})
         .text( function(d) {return d.Type;})
         .attr("text-anchor", "start")
         .attr("class", "textup");
 
     // Add title
     var text1t = svg.append("text")
-        .attr("x", width/1.9)
-        .attr("y", 20)
-        .style("font-size", "1.5em")
-        .style("font-family", "'Oswald', sans-serif")
-        .text("Estimated Death Cases for 2017")
+        .attr("x", width/3)
+        .attr("y", 0)
         .attr("text-anchor", "start")
         .attr("class", "texttitle");
 

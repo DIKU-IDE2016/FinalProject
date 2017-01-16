@@ -2,9 +2,15 @@
 /* Reset CSS
  * --------------------------------------- */
 
-@import url(//fonts.googleapis.com/css?family=Roboto:300);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Raleway|Slabo+27px|Roboto:100|Oswald:300');
 
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+h1,h2,h3,h4,h5,h6 {
+    padding: 0;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+body,div,dl,dt,dd,ul,ol,li,pre,
 form,fieldset,input,textarea,p,blockquote,th,td {
     padding: 0;
     margin: 0;
@@ -108,7 +114,7 @@ abbr,acronym { border: 0;
 }
 
 #header{
-  margin-bottom: 100px;
+  position: absolute;
 }
 
 /* Demos Menu
@@ -137,10 +143,10 @@ abbr,acronym { border: 0;
 .text-body {
   background-color: rgba(0, 0, 0, 0.7);
   padding: 30px;
-  height:290px;
+  height: 310px;
   position: relative;
   color: #f0f0f0;
-  font-size: 1.00em;
+  font-size: 1.2em;
   line-height: 1.40em;
   font-weight: 500;
   text-align: left;
@@ -159,7 +165,7 @@ h1 {
   margin-bottom: 30px;
   top:0;
   font-size: 70px;
-  font-family: Snell Roundhand, cursive;
+  /*font-family: Snell Roundhand, cursive;*/
 }
 
 section {
@@ -200,6 +206,7 @@ div.vis_wrap_right {
 
 .scroll-indicator { 
   position: absolute;
+  z-index: 100;
   margin-left: auto;
   margin-right: auto;
   color: rgba(0,0,0,0.5);
@@ -243,13 +250,13 @@ div.vis_wrap_right {
   cursor: hand;
 }
 
-#section0 h1{
+#section0 h1 {
   position: fixed;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
-  top:21%;
+  top:4%;
   color: white;
 }
 
@@ -414,11 +421,18 @@ div.tooltip {
   font-size: 16px;
   position: relative;
   margin: 20px;
-  background-color: rgb(34, 165, 151);
   border: 0 none;
   border-radius: 8px 8px 8px 8px;
   box-shadow: -3px 3px 15px #888888;
   padding: 0px;
+}
+
+#section2017_vis1 .box {
+  background-color: rgb(34, 165, 151);
+}
+
+#section2017_vis2 .box_death {
+  background-color: #1693A7;
 }
 
 .box text, .box_death text{
@@ -432,4 +446,14 @@ div.tooltip {
   font-weight: 300;
   opacity: 1;
   -webkit-font-smoothing:antialiased;
+}
+
+.box_inner {
+    width: 50%;
+    height: 200px;
+    background: red;
+}
+
+.box_inner_1 {
+  float: left;
 }
