@@ -296,10 +296,6 @@ div.vis_wrap_right {
   float: left;
   margin-left: 0px
 }
-#dandi {
-  float: left;
-
-}
 
 .cmn-toggle {
   position: absolute;
@@ -327,7 +323,7 @@ input.cmn-toggle-yes-no + label:after {
   bottom: 0;
   right: 0;
   font-weight:normal; 
-  font-size: 70px;
+  font-size: 20px;
   text-align: center;
   /*line-height: 60px;*/
   margin-bottom: 30px;
@@ -556,4 +552,19 @@ div.tooltip {
   padding-left: 50px;
   text-align: justify;
   overflow:hidden;
+}
+
+.section2_row {
+  padding-left: 200px; 
+}
+
+#visulaizationLines {
+  float: left;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+#section2 .col-md-8 {
+  position: relative;
+  height: 600px;
 }

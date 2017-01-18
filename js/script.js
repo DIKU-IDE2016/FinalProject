@@ -508,8 +508,8 @@ $(document).ready(function() {
 // =============================================================================
 
                     var vis = d3.select("#visulaizationLines"),
-                    WIDTH = 800,
-                    HEIGHT = 500,
+                    WIDTH = 600,
+                    HEIGHT = 400,
                     MARGINS = {
                         top: 20,
                         right: 20,
