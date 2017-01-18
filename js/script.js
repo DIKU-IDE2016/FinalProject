@@ -6,6 +6,7 @@ var firsttime = true;
 $(document).ready(function() {
 	$("#menu").hide();
 	$('#fullpage').fullpage({
+        loopHorizontal: false,
 		sectionsColor: 	['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', '#FF847C'],
 		anchors: 		['intro', 'visualization1',	'visualization2', 'Estimatesfor2017', 	'aboutus'],
 		menu: '#menu',
@@ -32,22 +33,14 @@ $(document).ready(function() {
 				
 			}
 			else if(index == 2){
-				$('#sc_indnew').fadeIn().queue(function(next) {
-						$(this).addClass("bouncing");
-						next();
-				});
+                $("#hover").delay(300).fadeIn(500);
+                $("#donut_chart_desc").hover(function(){
+                    $("#hover").fadeOut(100);
+                });
 			}
-			else if(index == 3){
-				$('#sc_ind1').fadeIn().queue(function(next) {
-						$(this).addClass("bouncing");
-						next();
-				});				
+			else if(index == 3){		
 			}
-            else if(index == 4){
-                $('#sc_ind2').fadeIn().queue(function(next) {
-                        $(this).addClass("bouncing");
-                        next();
-                });             
+            else if(index == 4){          
             }
 			
 		}
@@ -333,8 +326,8 @@ $(document).ready(function() {
 
         this.create = function(dataset) {
             var $charts = $('#donut-charts');
-            chart_m = $charts.innerWidth() / dataset.length / 2 * 0.08;
-            chart_r = $charts.innerWidth() / dataset.length / 2 * 0.70;
+            chart_m = $charts.innerWidth() / dataset.length / 2 * 0.28;
+            chart_r = $charts.innerWidth() / dataset.length / 2 * 0.9;
 
             charts.append('svg')
                 .attr('class', 'legend')
@@ -356,6 +349,8 @@ $(document).ready(function() {
             createCenter();
 
             updateDonut();
+
+            $("#donut-charts").css("width", "100%");
         }
     }
 
@@ -829,7 +824,7 @@ var width = 800 - margins.left - margins.right,
     barHeight = 25;
 
 var left_width = 250;
-var left_width_label = 10;
+var left_width_label = 240;
 var gap = 20, yRangeBand;
 
 // redefine y for adjusting the gap
@@ -897,7 +892,7 @@ d3.csv("data/NewCaseEstimates2017.csv", function(error,data) {
         .attr("x", left_width_label)
         .attr("y", function(d, i) { return y(i) + yRangeBand + 2;})
         .text( function(d) {return d.Type;})
-        .attr("text-anchor", "start")
+        .attr("text-anchor", "end")
         .attr("class", "textup");
 
     // Add title
@@ -1007,7 +1002,7 @@ d3.csv("data/DeathEstimates2017.csv", function(error,data) {
         .attr("x", left_width_label)
         .attr("y", function(d, i) { return y(i) + yRangeBand + 2;})
         .text( function(d) {return d.Type;})
-        .attr("text-anchor", "start")
+        .attr("text-anchor", "end")
         .attr("class", "textup");
 
     // Add title

@@ -2,7 +2,7 @@
 /* Reset CSS
  * --------------------------------------- */
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Raleway|Slabo+27px|Roboto:100|Oswald:300');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Raleway|Slabo+27px|Roboto:300|Oswald:300');
 
 h1,h2,h3,h4,h5,h6 {
     padding: 0;
@@ -132,6 +132,7 @@ abbr,acronym { border: 0;
   margin: auto;
   max-width: 530px;
   border-radius: 10px;
+  z-index: 100;
   clear: both;
   overflow: hidden;
   -webkit-transition: all 0.2s ease-out;
@@ -165,7 +166,6 @@ h1 {
   margin-bottom: 30px;
   top:0;
   font-size: 70px;
-  /*font-family: Snell Roundhand, cursive;*/
 }
 
 section {
@@ -260,6 +260,7 @@ div.vis_wrap_right {
   color: white;
 }
 
+
 /*#section1 .inner-text {
   width: inherit !important;
   margin-right: 30px;
@@ -299,6 +300,7 @@ div.vis_wrap_right {
   float: left;
 
 }
+
 .cmn-toggle {
   position: absolute;
   /*margin-left: -9999px;*/
@@ -324,7 +326,6 @@ input.cmn-toggle-yes-no + label:after {
   left: 0;
   bottom: 0;
   right: 0;
-  font-family: Snell Roundhand, cursive;
   font-weight:normal; 
   font-size: 70px;
   text-align: center;
@@ -437,7 +438,10 @@ div.tooltip {
 
 .box text, .box_death text{
   fill:white;
-  font-weight: 100;
+}
+
+.box .textup, .box_death .textup{
+  font-weight: 400;
 }
 .tlabel{
   display: block;
@@ -456,4 +460,100 @@ div.tooltip {
 
 .box_inner_1 {
   float: left;
+}
+
+#donut_text_wrapper1 {
+  position: absolute;
+  overflow: hidden;
+  left:0;
+  height: 65%; 
+  width: 550px;
+  top: 25%;
+}
+#donut_text_wrapper2 {
+  position: relative;
+    overflow: hidden;
+    height: 100%; 
+
+}
+
+#donut-charts {
+  z-index: 100;
+}
+
+#section1 h3 {
+  color: #00DFFC;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+  margin-left: 250px;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+#donut_chart_desc {
+  position: absolute;
+  left: -280px;
+  height: 100%;
+  max-width: 400px;
+  -webkit-transition: left 1s;
+  transition: left 1s;
+}
+
+#donut_chart_desc p{
+  opacity: 0;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+#donut_chart_desc:hover{
+    left: -30px;
+    -webkit-transition: left 2s; /* For Safari 3.1 to 6.0 */
+    transition: left 1s;
+}
+
+#donut_chart_desc {
+  overflow: hidden;
+}
+
+#hover {
+  position: absolute;
+  width: 100px;
+  left: 120px;
+  top: 15%;
+  display: none;
+}
+
+#donut_chart_desc img{
+    -webkit-transition: 1s;
+    transition: 1s;
+    position: absolute;
+    top: 45%;
+    right: -45px;
+    width: 50px;
+    opacity: 0.7;
+}
+
+#donut_chart_desc:hover img{
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+}
+
+#donut_chart_desc:hover h3{
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 0;
+}
+
+#donut_chart_desc:hover p{
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 1;
+}
+
+#donut_chart_desc .text-body{
+  height: 100%;
+  padding-left: 50px;
+  text-align: justify;
+  overflow:hidden;
 }
