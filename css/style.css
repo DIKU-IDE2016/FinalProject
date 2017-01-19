@@ -638,6 +638,9 @@ div.tooltip {
   opacity: 0.2;
 }
 
+#filters table img:hover{
+  opacity: 0.3;
+}
 .clicked_gender {
   opacity: 1.0 !important;
 }
