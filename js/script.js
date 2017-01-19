@@ -33,7 +33,7 @@ $(document).ready(function() {
 				
 			}
 			else if(index == 2){
-                $("#hover").delay(300).fadeIn(500);
+                $("#hover").delay(200).fadeIn(500);
                 $("#donut_chart_desc").hover(function(){
                     $("#hover").fadeOut(100);
                 });
@@ -60,6 +60,20 @@ $(document).ready(function() {
 // =============================================================================
 // === D3.js Pie chart =========================================================
 // =============================================================================
+    
+    var part_colors = {
+        "Breast": "#FF3D7F",
+        "Colorectum": "#0B486B",
+        "Leukemia": "#abc432",
+        "Liver and intrahepatic bile duct": "#FF9900",
+        "Lung and bronchus": "#EDC951",
+        "Prostate": "#8A9B0F",
+        "Ovary": "#CC333F",
+        "Uterus": "#00A0B0"
+    };
+
+    var default_fill = "#fee0d2";
+    var default_stroke = "#de2d26";
 
 	// load data and parse it accordingly to for a dataset to use with the pie
 	d3.text("data/pie.csv", function(text){
@@ -360,6 +374,7 @@ $(document).ready(function() {
    
     // on load we call drawBody with Female Incidence rates
     drawBody("data/female_incidence.csv", false);
+
     function drawBody(csv, isMale) {
         // clean canvas of everything
         d3.selectAll("#visulaizationLines g").remove();
@@ -404,26 +419,35 @@ $(document).ready(function() {
                 var body = d3.select("#human");
 
                 body.selectAll('g g g path')
-                    .on('click', function(){
+                    .on('dblclick', function(){
                         var label = d3.select(this).attr("label");
                         var isClicked = !d3.select(this).classed("clickedbody");
-                        d3.select(this)
-                            .classed("clickedbody",isClicked);
+                        
                         if(isClicked){
+                            d3.select(this)
+                            .classed("clickedbody",isClicked);
+
                             for(var attr in clicked){
                                 clicked[attr] = false;
                             }
                             clicked["Combined"] = true;
-                        } else{
-                            for(var attr in clicked){
-                                clicked[attr] = false;
-                            }
-                        }
+
                             body.selectAll('g ellipse').
                             each(function(){
                                 d3.select(this).classed("clicked",false);
+                                d3.select(this).attr('style', null);
+                                d3.select(this).style("fill", default_fill);
+                                d3.select(this).style("stroke", default_stroke);
+                                $(".line_legend table tr").hide();
+
                             })
-                        redrawLines(clicked);
+                            redrawLines(clicked);
+                        } else{
+                            // for(var attr in clicked){
+                            //     clicked[attr] = false;
+                            // }
+                        }
+                        
                     });
 
                 body.selectAll('g ellipse')
@@ -453,11 +477,22 @@ $(document).ready(function() {
                                 clicked["Combined"] = false;
                             }
                             var label = d3.select(this).attr("label");
+                            var pid = d3.select(this).attr("id");
+                            d3.select(this).style("fill", part_colors[label]);
+                            d3.select(this).style("stroke", part_colors[label]);
+                            $("#td_"+pid).fadeIn(500);
                             var isClicked = !d3.select(this).classed("clicked");
-                            d3.select(this)
+                            if(!isClicked) {
+                                d3.select(this).style("fill", default_fill);
+                                d3.select(this).style("stroke", default_stroke);
+                                $("#td_"+pid).fadeOut(500);
+                            }
+                            
+                             d3.select(this)
                                 .classed("clicked",isClicked);
-                                clicked[label] = isClicked;
+                                 clicked[label] = isClicked;
                                 // console.log(clicked)
+                                console.log(clicked);
                             redrawLines(clicked);
                         });
 
@@ -631,8 +666,8 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(combined))
-                                          .attr('stroke', 'green')
-                                          .attr('stroke-width', 2)
+                                          .attr('stroke', "green")
+                                          .attr('stroke-width', 5)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
 
@@ -648,7 +683,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(breast))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -665,7 +700,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(colorectum))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -682,7 +717,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(leukemia))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -699,7 +734,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(liver))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -716,7 +751,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(lung))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -733,7 +768,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(prostate))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -750,7 +785,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(ovary))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();
@@ -767,7 +802,7 @@ $(document).ready(function() {
                                         var path = vis.append('svg:path')
                                           .classed('plotline', true)
                                           .attr('d', lineGen(uterus))
-                                          .attr('stroke', 'green')
+                                          .attr('stroke', part_colors[attr])
                                           .attr('stroke-width', 2)
                                           .attr('fill', 'none');
                                         var totalLength = path.node().getTotalLength();

@@ -354,13 +354,15 @@ input.cmn-toggle-yes-no:checked + label:after {
       fill: #fee0d2;
       stroke: #de2d26;
       stroke-width: 1px;
+      cursor: pointer;
+      cursor: hand;
 }
 
 .bodypoints.hovered {
   opacity: 0.5;
 }
 .bodypoints.clicked {
-  opacity: 0.5;
+
 }
 div.tooltip { 
     position: absolute;     
@@ -375,7 +377,7 @@ div.tooltip {
     pointer-events: none;     
 }
 .clickedbody {
-  stroke-width: 5px;
+  stroke-width: 2px;
 }
 /*BODY POINTS END*/
 .axis path {
@@ -384,7 +386,6 @@ div.tooltip {
     shape-rendering: crispEdges;
 }
 .axis text {
-    font-family: Lato;
     font-size: 13px;
 }
 /*CSS for 2017 data*/
@@ -458,15 +459,15 @@ div.tooltip {
   float: left;
 }
 
-#donut_text_wrapper1 {
+.donut_text_wrapper1 {
   position: absolute;
   overflow: hidden;
   left:0;
   height: 65%; 
   width: 550px;
-  top: 25%;
+  top: 20%;
 }
-#donut_text_wrapper2 {
+.donut_text_wrapper2 {
   position: relative;
     overflow: hidden;
     height: 100%; 
@@ -486,7 +487,7 @@ div.tooltip {
     transition: 1s;
 }
 
-#donut_chart_desc {
+.donut_chart_desc {
   position: absolute;
   left: -280px;
   height: 100%;
@@ -495,19 +496,19 @@ div.tooltip {
   transition: left 1s;
 }
 
-#donut_chart_desc p{
+.donut_chart_desc p{
   opacity: 0;
   -webkit-transition: 1s;
     transition: 1s;
 }
 
-#donut_chart_desc:hover{
+.donut_chart_desc:hover{
     left: -30px;
     -webkit-transition: left 2s; /* For Safari 3.1 to 6.0 */
     transition: left 1s;
 }
 
-#donut_chart_desc {
+.donut_chart_desc {
   overflow: hidden;
 }
 
@@ -515,24 +516,8 @@ div.tooltip {
   position: absolute;
   width: 100px;
   left: 120px;
-  top: 15%;
+  top: 12%;
   display: none;
-}
-
-#donut_chart_desc img{
-    -webkit-transition: 1s;
-    transition: 1s;
-    position: absolute;
-    top: 45%;
-    right: -45px;
-    width: 50px;
-    opacity: 0.7;
-}
-
-#donut_chart_desc:hover img{
-    -webkit-transition: 1s;
-    transition: 1s;
-    opacity: 0;
 }
 
 #donut_chart_desc:hover h3{
@@ -541,13 +526,13 @@ div.tooltip {
     margin-left: 0;
 }
 
-#donut_chart_desc:hover p{
+.donut_chart_desc:hover p{
     -webkit-transition: 1s;
     transition: 1s;
     opacity: 1;
 }
 
-#donut_chart_desc .text-body{
+.donut_chart_desc .text-body{
   height: 100%;
   padding-left: 50px;
   text-align: justify;
@@ -564,7 +549,55 @@ div.tooltip {
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
 }
-#section2 .col-md-8 {
+
+#human{
+  margin: auto;
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+}
+
+.line_legend {
+  margin: auto;
+  max-height: 300px;
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+}
+
+.line_legend table {
+  min-width: 200px;
+  border-collapse:separate; 
+  border-spacing:0.5em;
+  font-size: 0.8em;
+}
+
+.line_legend table td {
+  text-align: left;
+  min-width: 15px;
+}
+.line_legend table td {
+  text-align: left;
+  min-width: 15px;
+}
+
+.line_legend table td.color {
+  width: 15px;
+}
+
+.line_legend table tr {
+  display: none;
+}
+
+#section2 .col-md-6 {
+  position: relative;
+  height: 600px;
+}
+
+#section2 .col-md-3 {
+  position: relative;
+  height: 600px;
+}
+
+#section2 .col-md-2 {
   position: relative;
   height: 600px;
 }
