@@ -7,9 +7,14 @@
 	<link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="libs/full-page/jquery.fullPage.css" />
 	<link rel="stylesheet" type="text/css" href="libs/font-awesome-4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script type="text/javascript" src="libs/d3_v3/d3.min.js"></script>
 	<script type="text/javascript" src="libs/d3_v3/d3plus.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/foundation-icons/foundation-icons.css" />
+	
+
 
 </head>
 <body>
@@ -81,6 +86,43 @@
 		<div class="section container-fluid" id="section2">
 			<h2>Rate in the US, 1975-2013</h2>
 			<div class="section2_row">
+				
+				<div class="col-md-2" >
+					<div id="filters">
+						<table>
+							<tr class="title">
+								<td colspan="2"><h3>Filter Panel</h3></td>
+							</tr>
+							<tr class="labeling">
+								<td>Male</td>
+								<td>Female</td>
+							</tr>
+							</tr>
+								<td>
+									<img id="male" src="img/male.png" />
+								</td>
+								<td>
+									<img id="female" class="clicked_gender" src="img/female.png" />
+								</td>
+							</tr>
+							<tr class="cause">
+								<td colspan="2">
+									<input type="checkbox" id="toggle-gender" data-toggle="toggle" data-on="<i class='cust fi-skull'></i> Death" data-onstyle="danger" data-offstyle="info" data-off="<i class='cust fi-alert'></i> Incidence">
+								</td>
+							</tr>
+
+							<tr class="tips">
+								<td colspan="2">
+								  <ul style="list-style-type:disc">
+								  	<li>Click on circles to see trends for their corresponding part</li>
+								  	<li>Double click on the human figure to see the combined trends</li>
+								  </ul>
+								</td>
+							</tr>
+
+							
+						</table>
+					</div>
 				<!-- <div>		
 					<div class="switch">
 					  	<input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-yes-no" type="checkbox">
@@ -91,6 +133,7 @@
 					  	<label for="cmn-toggle-2" data-on="Death" data-off="Incidence"></label>
 					</div>
 				</div> -->
+				</div>
 			    <div class="col-md-2">
 					<svg width="167" height="400" xmlns="http://www.w3.org/2000/svg" id="human">
 					 <metadata id="metadata7">image/svg+xml</metadata>
@@ -209,5 +252,6 @@
 <script type="text/javascript" src="libs/jQuery/jquery.js"></script>
 <script type="text/javascript" src="libs/full-page/jquery.fullPage.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- <script type="text/javascript" src="libs/scrolloverflow.min.js"></script> -->
 </html>

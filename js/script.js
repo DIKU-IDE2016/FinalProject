@@ -4,6 +4,7 @@
 
 var firsttime = true;
 $(document).ready(function() {
+
 	$("#menu").hide();
 	$('#fullpage').fullpage({
         loopHorizontal: false,
@@ -56,6 +57,12 @@ $(document).ready(function() {
     $(".fa").click(function(){
     	$.fn.fullpage.moveSectionDown();
     });
+
+
+    $('#toggle-gender').bootstrapToggle({
+        size: "normal"
+    });
+
 
 // =============================================================================
 // === D3.js Pie chart =========================================================
@@ -417,6 +424,16 @@ $(document).ready(function() {
                     .style("opacity", 0);
 
                 var body = d3.select("#human");
+
+                body.selectAll('g ellipse').
+                each(function(){
+                    d3.select(this).classed("clicked",false);
+                    d3.select(this).attr('style', null);
+                    d3.select(this).style("fill", default_fill);
+                    d3.select(this).style("stroke", default_stroke);
+                    $(".line_legend table tr").hide();
+
+                });
 
                 body.selectAll('g g g path')
                     .on('dblclick', function(){
@@ -827,26 +844,58 @@ $(document).ready(function() {
 // http://bl.ocks.org/WilliamQLiu/59c87d2bcc00800ec3f9 we should DO THIS
 
     // We watch the checkbox for changes and re-draw the whole view
-    $('input:checkbox').change(
-        function(){
-            var male = document.getElementById("cmn-toggle-1").checked;
-            var death = document.getElementById("cmn-toggle-2").checked;
+    $("#filters table img").click(function() {
+        $("#filters table img").removeClass("clicked_gender");
+        $(this).addClass("clicked_gender");
+        filterChanged();
+    });
 
-            if (male && death) {
-                console.log("Male Death");
-                drawBody("data/male_death.csv", true);
+    $('#toggle-gender').change(function() {
+        filterChanged();
+    })
 
-            } else if (male && !death) {
-                console.log("Male Incidence");
-                drawBody("data/male_incidence.csv", true);
-            } else if (!male && death) {
-                console.log("Female Death");
-                drawBody("data/female_death.csv", false);
-            } else if(!male && !death){
-                console.log("Female Incidence");
-                drawBody("data/female_incidence.csv", false);
-            }
-        });
+    function filterChanged() {
+
+        gender = $("#filters table img.clicked_gender").attr("id");
+        male = (gender == "male");
+        death = $('#toggle-gender').prop('checked');
+
+        if (male && death) {
+            console.log("Male Death");
+            drawBody("data/male_death.csv", true);
+
+        } else if (male && !death) {
+            console.log("Male Incidence");
+            drawBody("data/male_incidence.csv", true);
+        } else if (!male && death) {
+            console.log("Female Death");
+            drawBody("data/female_death.csv", false);
+        } else if(!male && !death){
+            console.log("Female Incidence");
+            drawBody("data/female_incidence.csv", false);
+        }
+    }
+
+    // $('input:checkbox').change(
+    //     function(){
+    //         var male = document.getElementById("cmn-toggle-1").checked;
+    //         var death = document.getElementById("cmn-toggle-2").checked;
+
+    //         if (male && death) {
+    //             console.log("Male Death");
+    //             drawBody("data/male_death.csv", true);
+
+    //         } else if (male && !death) {
+    //             console.log("Male Incidence");
+    //             drawBody("data/male_incidence.csv", true);
+    //         } else if (!male && death) {
+    //             console.log("Female Death");
+    //             drawBody("data/female_death.csv", false);
+    //         } else if(!male && !death){
+    //             console.log("Female Incidence");
+    //             drawBody("data/female_incidence.csv", false);
+    //         }
+    //     });
 });
 
 // --- For section 2017-----------------------
