@@ -7,8 +7,7 @@ $(document).ready(function() {
 
 	$("#menu").hide();
 	$('#fullpage').fullpage({
-        loopHorizontal: false,
-		sectionsColor: 	['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', '#FF847C'],
+		sectionsColor: 	['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', '#0B486B'],
 		anchors: 		['intro', 'visualization1',	'visualization2', 'Estimatesfor2017', 	'aboutus'],
 		menu: '#menu',
 
@@ -19,29 +18,39 @@ $(document).ready(function() {
 			else
 				$("#menu").fadeOut();
 		},
-		afterLoad: function(anchorLink, index){
+        afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
+            $('.slide svg').animate({ opacity: 1 }, 1000);
+        },
 
+		afterLoad: function(anchorLink, index){
 			if(index == 1){
-				$('#section0 .text-editor-wrap').delay(200).animate({opacity: 1}, 200, function() {
-					$('#being_typed_intro').delay(200).animate({ marginTop: "0", opacity: 1 }, 200, function(){
-						$('#sc_ind').fadeIn().delay(500).queue(function(next) {
+				$('#section0 .text-editor-wrap').delay(500).animate({opacity: 1}, 800, function() {
+					$('#being_typed_intro').delay(200).animate({ marginTop: "0", opacity: 1 }, 800, function(){
+						$('#sc_ind').fadeIn().delay(1500).queue(function(next) {
   							$(this).addClass("bouncing");
   							next();
 						});
 					});
 				});
-
-				
 			}
 			else if(index == 2){
-                $("#hover").delay(200).fadeIn(500);
+                $("#hover").delay(500).fadeIn(500);
                 $("#donut_chart_desc").hover(function(){
                     $("#hover").fadeOut(100);
                 });
 			}
-			else if(index == 3){		
-			}
-            else if(index == 4){          
+            else if(index == 4){  
+                $('#section2017_vis1 svg').animate({ opacity: 1 }, 1000);  
+                       
+            }
+            else if(index == 5){  
+                $('#section4').find('p').first().fadeIn(1800, function(){
+                    $('#ed').animate({ opacity: 1 }, 800, function() {
+                        $('#eh').animate({ opacity: 1 }, 800, function() {
+                            $('#gb').animate({ opacity: 1 }, 800);
+                        });
+                    });
+                });        
             }
 			
 		}
@@ -60,7 +69,8 @@ $(document).ready(function() {
 
 
     $('#toggle-gender').bootstrapToggle({
-        size: "normal"
+        size: "normal",
+        width: 150
     });
 
 

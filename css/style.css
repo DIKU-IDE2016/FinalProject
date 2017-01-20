@@ -107,7 +107,7 @@ abbr,acronym { border: 0;
 
 
 #section0{
-  background-image: url(../img/bg5.jpg);
+  background-image: url(../img/bg3.jpg);
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center; 
@@ -257,7 +257,7 @@ div.vis_wrap_right {
   left: 0;
   right: 0;
   top:4%;
-  color: white;
+  opacity: 0.9;
 }
 
 
@@ -278,10 +278,32 @@ div.vis_wrap_right {
       position:relative;
   }
 
+
+#section4 p{
+  display: none;
+}
+
+.right_zero {
+  right: 0
+}
+
+.left_zero {
+  right: 0
+}
+
 .closing {
-  font-size: 1.5em;
+  font-size: 2.5em;
   width: 50%;
-  margin: 0 auto;
+  height: 30%;
+  color: #FF6B6B;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.closing span{
+  color: #C7F464;
+  opacity: 0;
 }
 
 .fp-scrollable {
@@ -463,11 +485,34 @@ div.tooltip {
   position: absolute;
   overflow: hidden;
   left:0;
-  height: 65%; 
+  height: 55%; 
   width: 550px;
-  top: 20%;
+  top: 27%;
 }
+.donut_text_wrapper1 .text-body p {
+  font-size: 0.8em !important;
+}
+
+.donut_text_wrapper1_right {
+  position: absolute;
+  overflow: hidden;
+  right:0;
+  height: 55%; 
+  width: 550px;
+  top: 27%;
+}
+.donut_text_wrapper1_right .text-body p {
+  font-size: 0.8em !important;
+}
+
 .donut_text_wrapper2 {
+  position: relative;
+    overflow: hidden;
+    height: 100%; 
+
+}
+
+.donut_text_wrapper2_right {
   position: relative;
     overflow: hidden;
     height: 100%; 
@@ -483,6 +528,35 @@ div.tooltip {
   margin-bottom: 30px;
   font-size: 1.5em;
   margin-left: 250px;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+.fp-prev {
+  display:none;
+}
+
+#section3 .text-body h3  {
+  color: #00DFFC;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+  margin-left: 250px;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+#section2 .text-body h3 {
+  color: #00DFFC;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+#section2 .text-body h4 {
+  color: #00DFFC;
+  margin-bottom: 30px;
+  font-size: 1.5em;
   -webkit-transition: 1s;
     transition: 1s;
 }
@@ -512,6 +586,39 @@ div.tooltip {
   overflow: hidden;
 }
 
+.donut {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.donut_chart_desc_right {
+  position: absolute;
+  right: -280px;
+  height: 100%;
+  max-width: 400px;
+  -webkit-transition: right 1s;
+  transition: right 1s;
+}
+
+.donut_chart_desc_right p{
+  opacity: 0;
+  -webkit-transition: 1s;
+    transition: 1s;
+}
+
+.donut_chart_desc_right:hover{
+    right: -30px;
+    -webkit-transition: right 2s; /* For Safari 3.1 to 6.0 */
+    transition: right 1s;
+}
+
+.donut_chart_desc_right {
+  overflow: hidden;
+}
+
+
+
+
 #hover {
   position: absolute;
   width: 100px;
@@ -538,6 +645,28 @@ div.tooltip {
   text-align: justify;
   overflow:hidden;
 }
+
+
+#donut_chart_desc_right:hover h3{
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 0;
+}
+
+.donut_chart_desc_right:hover p{
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 1;
+}
+
+.donut_chart_desc_right .text-body{
+  height: 100%;
+  padding-left: 30px;
+  padding-right: 50px;
+  text-align: justify;
+  overflow:hidden;
+}
+
 
 .section2_row {
   padding-left: 100px; 
@@ -672,4 +801,8 @@ div.tooltip {
 
 .tips ul {
   padding-top: 40px;
+}
+
+#section3 svg {
+  opacity: 0.0;
 }
