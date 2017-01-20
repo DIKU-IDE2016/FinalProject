@@ -485,9 +485,9 @@ div.tooltip {
   position: absolute;
   overflow: hidden;
   left:0;
-  height: 55%; 
+  height: 65%; 
   width: 550px;
-  top: 27%;
+  top: 22%;
 }
 .donut_text_wrapper1 .text-body p {
   font-size: 0.8em !important;
@@ -497,9 +497,9 @@ div.tooltip {
   position: absolute;
   overflow: hidden;
   right:0;
-  height: 55%; 
+  height: 65%; 
   width: 550px;
-  top: 27%;
+  top: 22%;
 }
 .donut_text_wrapper1_right .text-body p {
   font-size: 0.8em !important;
@@ -527,9 +527,25 @@ div.tooltip {
   color: #00DFFC;
   margin-bottom: 30px;
   font-size: 1.5em;
-  margin-left: 250px;
+  margin-left: 300px;
   -webkit-transition: 1s;
-    transition: 1s;
+  transition: 1s;
+  margin-top: 10px;
+    /* Safari */
+  -webkit-transform: rotate(-270deg);
+
+  /* Firefox */
+  -moz-transform: rotate(-270deg);
+
+  /* IE */
+  -ms-transform: rotate(-270deg);
+
+  /* Opera */
+  -o-transform: rotate(-270deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
 }
 
 .fp-prev {
@@ -540,17 +556,49 @@ div.tooltip {
   color: #00DFFC;
   margin-bottom: 30px;
   font-size: 1.5em;
-  margin-left: 250px;
+  margin-left: 300px;
   -webkit-transition: 1s;
-    transition: 1s;
+  transition: 1s;
+  margin-top: 10px;
+    /* Safari */
+  -webkit-transform: rotate(-270deg);
+
+  /* Firefox */
+  -moz-transform: rotate(-270deg);
+
+  /* IE */
+  -ms-transform: rotate(-270deg);
+
+  /* Opera */
+  -o-transform: rotate(-270deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
 #section2 .text-body h3 {
   color: #00DFFC;
+  margin-right: 300px;
+  margin-top: 85px;
   margin-bottom: 30px;
   font-size: 1.5em;
   -webkit-transition: 1s;
     transition: 1s;
+
+      /* Safari */
+  -webkit-transform: rotate(270deg);
+
+  /* Firefox */
+  -moz-transform: rotate(270deg);
+
+  /* IE */
+  -ms-transform: rotate(270deg);
+
+  /* Opera */
+  -o-transform: rotate(270deg);
+
+  /* Internet Explorer */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
 #section2 .text-body h4 {
@@ -563,7 +611,7 @@ div.tooltip {
 
 .donut_chart_desc {
   position: absolute;
-  left: -280px;
+  left: -320px;
   height: 100%;
   max-width: 400px;
   -webkit-transition: left 1s;
@@ -593,7 +641,7 @@ div.tooltip {
 
 .donut_chart_desc_right {
   position: absolute;
-  right: -280px;
+  right: -320px;
   height: 100%;
   max-width: 400px;
   -webkit-transition: right 1s;
@@ -622,15 +670,49 @@ div.tooltip {
 #hover {
   position: absolute;
   width: 100px;
-  left: 120px;
-  top: 12%;
+  left: 85px;
+  top: 13%;
   display: none;
+}
+
+#donut_chart_desc1:hover h3{
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 0;
+    margin-top: 0;
+    -webkit-transform: rotate(0deg);
+
+    /* Firefox */
+    -moz-transform: rotate(0deg);
+
+    /* IE */
+    -ms-transform: rotate(0deg);
+
+    /* Opera */
+    -o-transform: rotate(0deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
 }
 
 #donut_chart_desc:hover h3{
     -webkit-transition: 1s;
     transition: 1s;
     margin-left: 0;
+    margin-top: 0;
+    -webkit-transform: rotate(0deg);
+
+    /* Firefox */
+    -moz-transform: rotate(0deg);
+
+    /* IE */
+    -ms-transform: rotate(0deg);
+
+    /* Opera */
+    -o-transform: rotate(0deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
 }
 
 .donut_chart_desc:hover p{
@@ -647,10 +729,23 @@ div.tooltip {
 }
 
 
-#donut_chart_desc_right:hover h3{
+#donut_chart_desc2:hover h3{
     -webkit-transition: 1s;
     transition: 1s;
-    margin-left: 0;
+    margin-top: 0;
+    -webkit-transform: rotate(0deg);
+
+    /* Firefox */
+    -moz-transform: rotate(0deg);
+
+    /* IE */
+    -ms-transform: rotate(0deg);
+
+    /* Opera */
+    -o-transform: rotate(0deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
 }
 
 .donut_chart_desc_right:hover p{
@@ -718,6 +813,7 @@ div.tooltip {
 
 #section2 .col-md-6 {
   position: relative;
+  width: 46% !important;
   height: 600px;
 }
 

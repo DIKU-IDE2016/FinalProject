@@ -34,12 +34,21 @@ $(document).ready(function() {
 				});
 			}
 			else if(index == 2){
-                $("#hover").delay(500).fadeIn(500);
+                $('#sc_ind1').delay(1500).addClass("bouncing");
+                $("#hover").delay(300).fadeIn(500);
                 $("#donut_chart_desc").hover(function(){
                     $("#hover").fadeOut(100);
                 });
 			}
+            else if(index == 3){
+                $('#sc_ind2').delay(1500).addClass("bouncing");
+                $("#hover").delay(500).fadeIn(500);
+                $("#donut_chart_desc").hover(function(){
+                    $("#hover").fadeOut(100);
+                });
+            }
             else if(index == 4){  
+                $('#sc_indnew').delay(1500).addClass("bouncing");
                 $('#section2017_vis1 svg').animate({ opacity: 1 }, 1000);  
                        
             }
