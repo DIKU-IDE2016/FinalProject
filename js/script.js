@@ -93,7 +93,7 @@ $(document).ready(function() {
         "Leukemia": "#abc432",
         "Liver and intrahepatic bile duct": "#FF9900",
         "Lung and bronchus": "#EDC951",
-        "Prostate": "#8A9B0F",
+        "Prostate": "#91204D",
         "Ovary": "#CC333F",
         "Uterus": "#00A0B0"
     };
