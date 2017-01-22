@@ -636,7 +636,7 @@ $(document).ready(function() {
                         .attr("y", 65)
                         .attr("x", -20)
                         .attr("transform", "rotate(-90)")
-                        .text("Value");
+                        .text("Rates per 100000");
 
                     // generate the actual line
                     var lineGen = d3.svg.line()
